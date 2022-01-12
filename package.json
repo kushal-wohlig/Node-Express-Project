@@ -1,0 +1,17 @@
+{
+  "name": "node-express-project",
+  "version": "1.0.0",
+  "description": "Practice Project for Node, Express and MongoDB",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "author": "Kushal Shah",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2",
+    "mongoose": "^6.1.6",
+    "pug": "^3.0.2"
+  }
+}

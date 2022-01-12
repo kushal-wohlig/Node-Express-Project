@@ -1,0 +1,15 @@
+doctype html 
+html 
+    head
+        title Articles
+    body 
+        h1 Pug Engine - View Articles
+        br
+        br
+        p #{title}
+        br
+        p #{description}
+        br
+        ul
+            each article, i in articles
+                li=article.body 
