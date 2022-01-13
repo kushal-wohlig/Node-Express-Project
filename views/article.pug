@@ -1,0 +1,16 @@
+extend layout 
+
+block content 
+    h1 #{title}
+
+    p #{article.title}
+    br
+    br
+    p #{article.body} 
+    br
+    br 
+    p  #{article.author}
+    br
+    br
+    button 
+        a(href="/articles/edit/"+article._id) Edit Article 

@@ -12,4 +12,8 @@ html
         br
         ul
             each article, i in articles
-                li=article.body 
+                li
+                    a(href='/articles/'+article._id)=article.body 
+        
+        a(href="/articles/add") 
+            button Add Articles

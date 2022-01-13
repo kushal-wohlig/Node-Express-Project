@@ -1,0 +1,40 @@
+extends layout
+
+block content
+    h1 #{title}
+
+    form(method='POST', action='/articles/edit/'+article._id)
+        #form-group
+            label(for="ID") ID: 
+            input.form-control(name='id',type="text",value=article.id)
+            br
+            br
+        #form-group
+            label(for="Title") Title: 
+            input.form-control(name='title',type="text",value=article.title)
+            br
+            br
+        #form-group
+            label(for="Author") Author: 
+            input.form-control(name='author',type="text", value=article.author)
+            br
+            br
+        #form-group
+            label(for="Body") Body: 
+            textarea.form-contol(name='body')= article.body
+            br
+            br
+
+        input.btn.btn-primary(type='submit' value='Submit the Edit')
+        br
+        br
+        
+    button(onclick='myFunction("/articles/delete/'+ article._id +'")') Delete     
+
+    script(type='text/javascript')
+        function myFunction(dat)
+            console.log(dat)
+        
+            
+
+        
