@@ -1,6 +1,10 @@
 const express=require('express');
 const path=require('path');
 var bodyParser = require('body-parser');
+const session = require('express-sessions')
+const expressValidator=require('express-validator');
+const flash=require('connect-flash');
+
 const mongoose=require('mongoose');
 
 const { title } = require('process');
@@ -70,14 +74,6 @@ app.get('/', function(req,res){
 });
 
 
-//new Route - /articles/add/
-app.get('/articles/add',function(req,res){
-    
-    res.render('add',{
-        title:'Add Articles'
-    });
-});
-
 //middleware for using body-parser
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -86,85 +82,27 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 
-//add POST requiest for submit btn
-app.post('/articles/add',function(req,res){
-    let article=new Article();
-    article.id=req.body.id;
-    article.title=req.body.title;
-    article.author=req.body.author;
-    article.body=req.body.body;
+//adding router for articles
+let articles=require('./routes/articles');
+app.use('/articles',articles);
 
-    article.save(function(err){
-        if(err)
-        {
-            console.log(err);
-            return;
-        }
-        else{
-            console.log("Data submitted to database");
-            res.redirect('/');
-        }
-    });
-
-    return;
+/*
+//Perform messages in expresss
+//middleware for express-session
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+  }));
+//middleware for express-messages
+app.use(require('connect-flash')());
+app.use(function (req, res, next) {
+  res.locals.messages = require('express-messages')(req, res);
+  next();
 });
 
-//get single article
-
-app.get('/articles/:id',function(req,res){
-    Article.findById(req.params.id,function(err,article){
-        //console.log(article);
-        res.render('article',{
-            title:'Single Article',
-            article:article
-        });
-    });
-});
-
-//edit update article
-app.get('/articles/edit/:id',function(req,res){
-    Article.findById(req.params.id,function(err,article){
-        //console.log(article);
-        res.render('edit_article',{
-            title:'Single Article Edit',
-            article:article
-        });
-    });
-});
-
-app.post('/articles/edit/:id',function(req,res){
-    let article={};
-    article.id=req.body.id;
-    article.title=req.body.title;
-    article.author=req.body.author;
-    article.body=req.body.body;
-
-    let query={_id:req.params.id};
-    Article.updateOne(query,article,function(err){
-        if(err)
-        {
-            console.log(err);
-        }
-        else{
-            res.redirect('/');
-        }
-    });
-
-});
-//deleting the article
-app.delete('/article/delete/:id',function(req,res){
-    let query={_id:req.params.id};
-    Article.remove(query,function(err){
-        if(err)
-        {
-            console.log(err);
-        }
-        else{
-            res.send('Success');
-        }
-    });
-});
-
+*/
 //server setup
 app.listen(3000,function(){
     console.log("Server started at port 3000");
