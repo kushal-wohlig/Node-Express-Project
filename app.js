@@ -86,6 +86,11 @@ app.use(bodyParser.json())
 let articles=require('./routes/articles');
 app.use('/articles',articles);
 
+
+//adding router for users
+let users=require('./routes/users');
+app.use('/users',users);
+
 /*
 //Perform messages in expresss
 //middleware for express-session
