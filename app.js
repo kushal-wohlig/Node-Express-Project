@@ -3,9 +3,11 @@ const path=require('path');
 var bodyParser = require('body-parser');
 const session = require('express-sessions')
 const expressValidator=require('express-validator');
+const passport = require('passport');
 const flash=require('connect-flash');
 
 const mongoose=require('mongoose');
+const config=require('./config/database');
 
 const { title } = require('process');
 //init app
@@ -13,7 +15,7 @@ const app=express();
 console.log("Hello World");
 
 //connecting with the database - mongodb
-mongoose.connect('mongodb://localhost/nodekb');
+mongoose.connect(config.database);
 let db=mongoose.connection;
 
 //check connection of database
@@ -29,6 +31,10 @@ db.on('error',function(err){
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine','pug');
 
+//passport config and middleware
+require('./config/passport')(passport);
+app.use(passport.initialize());
+app.use(passport.session());
 
 let Article =require('./models/article');
 //home route - view articles i.e. get
